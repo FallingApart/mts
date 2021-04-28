@@ -16,13 +16,13 @@ class GoodLinksController {
         });
         res.json(oneGoodLinks.rows[0]);
     }
-   /* async updateGoodLinks(req, res) {
+    async updateGoodLinks(req, res) {
         const { text, link } = req.body;
         const updateGoodLinks = await GoodLinks.update({
 
         });
         res.json(updateGoodLinks.rows[0]);
-    }*/
+    }
     async deleteGoodLinks(req, res) {
         const {id} = req.params;
         const deleteGoodLinks = await GoodLinks.delete({

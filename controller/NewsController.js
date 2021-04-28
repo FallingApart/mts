@@ -14,7 +14,7 @@ class NewsController {
         res.json(newNews);
     }
 
-    /*async getGoodLinks(req, res) {
+    async getGoodLinks(req, res) {
         const {id} = req.params;
         const oneGoodLinks = await GoodLinks.findone({
             wehere: {id}
@@ -34,7 +34,7 @@ class NewsController {
             wehere:{id}
         });
         res.json(deleteUser.rows[0]);
-    }*/
+    }
 };
 
 module.exports = new NewsController();
