@@ -14,26 +14,26 @@ class NewsController {
         res.json(newNews);
     }
 
-    async getGoodLinks(req, res) {
+    async getNews(req, res) {
         const {id} = req.params;
-        const oneGoodLinks = await GoodLinks.findone({
+        const oneNews = await News.findone({
             wehere: {id}
         });
-        res.json(oneGoodLinks.rows[0]);
+        res.json(oneNews.rows[0]);
     }
-    async updateGoodLinks(req, res) {
-        const { text, link } = req.body;
-        const updateGoodLinks = await GoodLinks.update({
+    async updateNews(req, res) {
+        const { img, text, bdate } = req.body;
+        const updateNews = await News.update({
 
         });
-        res.json(updateGoodLinks.rows[0]);
+        res.json(updateNews.rows[0]);
     }
-    async deleteGoodLinks(req, res) {
+    async deleteNews(req, res) {
         const {id} = req.params;
-        const deleteGoodLinks = await GoodLinks.delete({
+        const deleteNews = await News.delete({
             wehere:{id}
         });
-        res.json(deleteUser.rows[0]);
+        res.json(deleteNews.rows[0]);
     }
 };
 

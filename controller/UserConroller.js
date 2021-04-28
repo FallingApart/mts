@@ -16,23 +16,23 @@ class UserController {
         res.json(token);
     }
 
-    async getGoodLinks(req, res) {
+    async getUser(req, res) {
         const {id} = req.params;
-        const oneGoodLinks = await GoodLinks.findone({
+        const oneUser = await User.findone({
             wehere: {id}
         });
-        res.json(oneGoodLinks.rows[0]);
+        res.json(oneUser.rows[0]);
     }
-    async updateGoodLinks(req, res) {
-        const { text, link } = req.body;
-        const updateGoodLinks = await GoodLinks.update({
+    async updateUser(req, res) {
+        const { email, password, bdate, adress, gender, name, surname, midlename} = req.body;
+        const updateUser = await User.update({
 
         });
-        res.json(updateGoodLinks.rows[0]);
+        res.json(updateUser.rows[0]);
     }
     async deleteGoodLinks(req, res) {
         const {id} = req.params;
-        const deleteGoodLinks = await GoodLinks.delete({
+        const deleteUser = await User.delete({
             wehere:{id}
         });
         res.json(deleteUser.rows[0]);
