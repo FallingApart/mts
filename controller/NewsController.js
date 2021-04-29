@@ -14,7 +14,7 @@ class NewsController {
         res.json(newNews);
     }
 
-    async getNews(req, res) {
+    async getoneNews(req, res) {
         const {id} = req.params;
         const oneNews = await News.findone({
             wehere: {id}

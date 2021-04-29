@@ -2,7 +2,7 @@ const {User} = require('../models/models');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 class UserController {
-    async createUser(req, res) {
+    async registration(req, res) {
         const {email, password, bdate, adress, gender, name, surname, midlename} = req.body;
         const hashpassword = await bcrypt.hash(password, 7);
         const newUser = await User.create({
@@ -13,7 +13,15 @@ class UserController {
         },
             process.env.SECRET_KEY,{expiresIn:'1h'}
         );
-        res.json(token);
+        res.json({token});
+    }
+
+    async findOneUser (req, res){
+        const {email, password} = req.params;
+        const findOneUser = await User.findOne({
+            where: {email}
+        })
+        res.json(findOneUser);
     }
 
     async getUser(req, res) {
