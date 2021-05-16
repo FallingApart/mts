@@ -6,12 +6,12 @@ const User = sequelize.define('user', {
     id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
     email: { type: DataTypes.STRING, unique: true },
     password: { type: DataTypes.STRING, allowNull: false },
-    bdate: { type: DataTypes.DATE },
+    bdate: { type: DataTypes.DATE},
     adress: { type: DataTypes.TEXT, allowNull: false },
-    gender: { type: DataTypes.BOOLEAN },
     name: { type: DataTypes.STRING, allowNull: false },
     surname: { type: DataTypes.STRING, allowNull: false },
-    midlename: { type: DataTypes.STRING, allowNull: false }
+    middlename: { type: DataTypes.STRING, allowNull: false },
+    role: {type: DataTypes.STRING, defaultValue: 'user'}
 });
 const News = sequelize.define('news', {
     id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
@@ -38,10 +38,34 @@ const Offical = sequelize.define('offical', {
 });
 
 const Role = sequelize.define('role', {
-    id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
-    users: { type: DataTypes.INTEGER, allowNull: false },
-    manager: { type: DataTypes.INTEGER, allowNull: false },
-    admin: { type: DataTypes.INTEGER, allowNull: false }
+    id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true},
+    manager: { type: DataTypes.STRING, allowNull: false, defaultValue: 'manager'},
+    admin: { type: DataTypes.STRING, allowNull: false, defaultValue: 'admin'},
+    volunteer: {type:DataTypes.STRING, allowNull: false, defaultValue: 'volunteer'}
+});
+
+const UserData = sequelize.define('user_data',{
+id: {type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true},
+});
+
+const DataZakaz = sequelize.define('data_zakaz',{
+id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
+});
+
+const Zakaz = sequelize.define('zakaz',{
+id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
+type: {type: DataTypes.STRING, allowNull:false},
+description: {type: DataTypes.STRING, allowNull:false},
+media: {type:DataTypes.STRING, allowNull:false},
+rtc: {type:DataTypes.STRING, allowNull:false}
+});
+
+const Status = sequelize.define('status',{
+id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
+done: {type: DataTypes.STRING, allowNull: false},
+canceled: {type:DataTypes.STRING, allowNull:false},
+moder_in: {type: DataTypes.STRING, allowNull:false},
+work_in: {type: DataTypes.STRING, allowNull:false}
 });
 
 User.hasMany(News);
@@ -59,11 +83,27 @@ Offical.belongsTo(User);
 User.hasMany(Role);
 Role.belongsTo(User);
 
+User.hasOne(UserData);
+UserData.belongsTo(User);
+
+UserData.hasMany(DataZakaz);
+DataZakaz.belongsTo(UserData);
+
+Zakaz.hasOne(DataZakaz);
+DataZakaz.belongsTo(Zakaz);
+
+Status.hasOne(Zakaz);
+Zakaz.belongsTo(Status);
+
 module.exports = {
-    User,
-    News,
-    GoodLink,
-    Help,
-    Offical,
-    Role
+User,
+News,
+GoodLink,
+Help,
+Offical,
+Role,
+UserData,
+DataZakaz,
+Zakaz,
+Status
 }

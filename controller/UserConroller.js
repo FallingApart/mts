@@ -1,19 +1,30 @@
-const {User} = require('../models/models');
+const {User, UserData} = require('../models/models');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const AppError = require('../error/AppError.js');
 class UserController {
-    async registration(req, res) {
-        const {email, password, bdate, adress, gender, name, surname, midlename} = req.body;
-        const hashpassword = await bcrypt.hash(password, 7);
-        const newUser = await User.create({
-            email, password:hashpassword, bdate, adress, gender, name, surname, midlename
+    async registration(req, res, next) {
+        const {email, password, bdate, adress, name, surname, middlename} = req.body;
+        if(!email || !password) {
+            return next(AppError.badRequest('Не правильный email или пароль'));
+        }
+        const userCheck =  await User.findOne({
+            where: {email}
         });
+        if(userCheck) {
+            return next(AppError.badRequest('Такой пользователь уже есть'));
+        }
+        const hashpassword = await bcrypt.hash(password, 7);
+        const user = await User.create({
+            email, password:hashpassword, bdate, adress, name, surname, middlename
+        });
+        const userData = UserData.create({userId: user.id});
         const token = jwt.sign({
-            email, hashpassword, bdate, adress, gender, name, surname, midlename            
+            email, bdate, adress, name, surname, middlename            
         },
             process.env.SECRET_KEY,{expiresIn:'1h'}
         );
-        res.json({token});
+        return res.json({token});
     }
 
     async findOneUser (req, res){
