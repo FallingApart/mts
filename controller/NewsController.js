@@ -24,7 +24,7 @@ class NewsController {
     async updateNews(req, res) {
         const { img, text, bdate } = req.body;
         const updateNews = await News.update({
-
+            
         });
         res.json(updateNews.rows[0]);
     }

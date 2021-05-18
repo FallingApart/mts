@@ -7,12 +7,16 @@ const models = require('./models/models')
 const app = express();
 const PORT = process.env.PORT || 5000;
 const router = require('./router/index');
+const error = require('./middleware/ErrorMiddleware');
 
 
 app.use(express.static(path.resolve(__dirname, 'static')));
 app.use(express.json());
 app.use(fileUpload({}));
 app.use('/api', router);
+
+//Обработчик ошибок
+app.use(error);
 
 const startApp = async() => {
     try {

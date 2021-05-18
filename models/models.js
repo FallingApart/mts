@@ -57,7 +57,7 @@ id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
 type: {type: DataTypes.STRING, allowNull:false},
 description: {type: DataTypes.STRING, allowNull:false},
 media: {type:DataTypes.STRING, allowNull:false},
-rtc: {type:DataTypes.STRING, allowNull:false}
+rtc: {type:DataTypes.STRING, allowNull:true}
 });
 
 const Status = sequelize.define('status',{
